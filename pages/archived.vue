@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { useTodoStore } from '@/stores/todo'
+import { useTodoStore } from "@/stores/todo"; // Pinia store import
 
-const todoStore = useTodoStore()
+const todoStore = useTodoStore();
 
+// Action to restore a todo from the archive
 const restoreTodo = (id: number) => {
-  todoStore.restoreTodo(id)
-}
+  todoStore.restoreTodo(id); // Call the Pinia store action
+};
 </script>
 
 <template>
@@ -16,6 +17,7 @@ const restoreTodo = (id: number) => {
           <h1 class="text-2xl font-bold">Archived Todos</h1>
         </template>
 
+        <!-- Display archived todos -->
         <div v-if="todoStore.archivedTodos.length" class="space-y-4">
           <UCard
             v-for="todo in todoStore.archivedTodos"
@@ -30,7 +32,13 @@ const restoreTodo = (id: number) => {
                     {{ new Date(todo.date).toLocaleString() }}
                   </p>
                 </div>
-                <UButton color="green" variant="soft" size="sm" @click="restoreTodo(todo.id)">
+                <!-- Restore Button -->
+                <UButton
+                  color="green"
+                  variant="soft"
+                  size="sm"
+                  @click="restoreTodo(todo.id)"
+                >
                   Restore
                 </UButton>
               </div>
@@ -40,11 +48,16 @@ const restoreTodo = (id: number) => {
           </UCard>
         </div>
 
-        <div v-else class="text-center text-gray-500">No archived todos yet.</div>
+        <!-- No archived todos message -->
+        <div v-else class="text-center text-gray-500">
+          No archived todos yet.
+        </div>
       </UCard>
 
       <div class="text-center pt-4">
-        <NuxtLink to="/" class="text-primary underline">← Back to Todos</NuxtLink>
+        <NuxtLink to="/" class="text-primary underline"
+          >← Back to Todos</NuxtLink
+        >
       </div>
     </div>
   </div>

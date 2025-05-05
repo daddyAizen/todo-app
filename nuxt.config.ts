@@ -1,12 +1,8 @@
-import tailwindcss from "@tailwindcss/vite";
-// https://nuxt.com/docs/api/configuration/nuxt-config
+// nuxt.config.ts
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
-  vite: {
-    plugins: [tailwindcss()],
-  },
 
   modules: [
     "@nuxt/eslint",
@@ -15,8 +11,24 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/ui",
     "@pinia/nuxt",
+    "@nuxtjs/supabase"
   ],
+
   pinia: {
-    autoImports: ['defineStore'],
+    autoImports: ["defineStore"]
   },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ["cookie"],
+      include: ["@supabase/postgrest-js"]
+    }
+  },
+
+  runtimeConfig: {
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: process.env.SUPABASE_KEY
+    }
+  }
 });
